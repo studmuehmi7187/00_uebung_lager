@@ -2,7 +2,7 @@ package de.thro;
 
 import java.util.*;
 
-public class Lager implements ILager{
+public class Lager implements ILager, LagerplatzVisitor{
 
     /**
      * Verschiedene Lagerplatztype
@@ -61,15 +61,7 @@ public class Lager implements ILager{
      */
     @Override
     public int store(Ware ware) {
-        if (ware instanceof  WareRaumTemp)
-            return this.storeToLagerplatz((WareRaumTemp)ware);
-        if (ware instanceof  WareGekuehlt)
-            return this.storeToLagerplatz((WareGekuehlt)ware);
-        if (ware instanceof  WareMinus18)
-            return this.storeToLagerplatz((WareMinus18)ware);
-
-        //else
-        return this.storeToLagerplatz((WareMinus30)ware);
+        return  ware.accept(this);
     }
 
     /**
@@ -115,23 +107,19 @@ public class Lager implements ILager{
         System.out.println();
     }
 
-    private int storeToLagerplatz(WareRaumTemp ware) {
-        if (checkLager(ware, LagerplatzType.RAUMTEMP) == -1)
-            return checkLager(ware, LagerplatzType.GEKUEHLT);
-        return 0;
+    public int storeToLagerplatz(WareRaumTemp ware) {
+        return checkLager(ware, LagerplatzType.RAUMTEMP);
     }
 
-    private int storeToLagerplatz(WareGekuehlt ware) {
+    public int storeToLagerplatz(WareGekuehlt ware) {
         return checkLager(ware, LagerplatzType.GEKUEHLT);
     }
 
-    private int storeToLagerplatz(WareMinus18 ware) {
-        if (checkLager(ware, LagerplatzType.MINUS_18) == -1)
-            return checkLager(ware, LagerplatzType.MINUS_30);
-        return 0;
+    public int storeToLagerplatz(WareMinus18 ware) {
+        return checkLager(ware, LagerplatzType.MINUS_18);
     }
 
-    private int storeToLagerplatz(WareMinus30 ware) {
+    public int storeToLagerplatz(WareMinus30 ware) {
         return checkLager(ware, LagerplatzType.MINUS_30);
     }
 
