@@ -61,7 +61,7 @@ public class Lager implements ILager, LagerplatzVisitor{
      */
     @Override
     public int store(Ware ware) {
-        return  ware.accept(this);
+        return ware.accept(this);
     }
 
     /**
@@ -75,7 +75,7 @@ public class Lager implements ILager, LagerplatzVisitor{
         if (this.lagerplaetze.containsKey(snr)) {
             LagerplatzElement le = this.lagerplaetze.remove(snr);
             int lagerplatzRemaining = this.remaining.get(le.lagerplatz);
-            this.remaining.put(le.lagerplatz, lagerplatzRemaining - 1);
+            this.remaining.put(le.lagerplatz, lagerplatzRemaining + 1);
             return le.ware;
         }
         return null;

@@ -27,7 +27,7 @@ public abstract class Ware {
         return snr;
     }
 
-    abstract int accept(LagerplatzVisitor visitor);
+    public abstract int accept(LagerplatzVisitor visitor);
 
     /**
      * Stringausgabe der Ware.
